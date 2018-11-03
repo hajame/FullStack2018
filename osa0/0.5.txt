@@ -17,9 +17,9 @@ note left of palvelin
 end note
 palvelin->selain: status 200 OK
 
-selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.js
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/spa.js
 note left of palvelin
-  ajetaan main.js
+  ajetaan spa.js
 end note
 palvelin->selain: status 200 OK
 

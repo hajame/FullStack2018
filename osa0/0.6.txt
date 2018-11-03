@@ -1,0 +1,26 @@
+kayttaja->selain:
+note left of selain
+osoitteessa /notes:
+käyttäjä kirjottaa muistiinpanon
+formin kenttään ja painaa talleta
+fullstack-exampleapp
+.herokuapp.com/notes
+end note
+selain->palvelin: POST fullstack-exampleapp.herokuapp.com/new_note
+note left of palvelin
+  tehdään POST-pyyntö jossa haetaan formin sisältämä teksti
+end note
+note left of palvelin
+  tehdään formin sisällöstä
+  uusi muistiinpano ja 
+  lisätään se tietokantaan
+end note
+note left of palvelin
+  päivitetään HTML:n sisältämä lista
+  muistiinpanoista (Redraw nodes)
+end note
+palvelin->selain: status 201 CREATED
+
+note left of selain
+ selain näyttää päivitetyn HTML:n
+end note
