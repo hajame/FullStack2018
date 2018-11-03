@@ -1,0 +1,35 @@
+kayttaja->selain:
+note left of selain
+kayttaja kirjottaa osoiteriville
+https://fullstack-exampleapp.
+herokuapp.com/spa
+end note
+selain->palvelin: GET https://fullstack-exampleapp.herokuapp.com/spa
+note left of palvelin
+  haetaan HTML pohja, 
+  jossa on form eikä yhtään muistinpanoa
+end note
+palvelin->selain: status 200 OK
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.css
+note left of palvelin
+  muodostetaan main.css
+end note
+palvelin->selain: status 200 OK
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.js
+note left of palvelin
+  ajetaan main.js
+end note
+palvelin->selain: status 200 OK
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/data.json
+note left of palvelin
+  muokataan HTML pohjaa siten, 
+  että palvelimelta haetut muistiinpanot muodostavat listan
+end note
+palvelin->selain: status 200 OK
+note left of selain
+ selain näyttää HTML:n,
+ johon on haettu data palvelimelta
+end note
