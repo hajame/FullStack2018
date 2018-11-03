@@ -1,11 +1,13 @@
 kayttaja->selain:
 note left of selain
 kayttaja kirjottaa osoiteriville
-fullstack-exampleapp.herokuapp.com/notes
+fullstack-exampleapp
+.herokuapp.com/notes
 end note
 selain->palvelin: GET fullstack-exampleapp.herokuapp.com/notes
 note left of palvelin
-  haetaan HTML pohja
+  haetaan HTML pohja, 
+  jossa on form eikä yhtään muistinpanoa
 end note
 palvelin->selain: status 200 OK
 
@@ -23,10 +25,11 @@ palvelin->selain: status 200 OK
 
 selain->palvelin: GET fullstack-exampleapp.herokuapp.com/data.json
 note left of palvelin
-  muodostetaan data.json
+  muokataan HTML pohjaa siten, 
+  että palvelimelta haetut muistiinpanot muodostavat listan
 end note
 palvelin->selain: status 200 OK
 note left of selain
- selain muodostaa ja näyttää HTML:n,
+ selain näyttää HTML:n,
  johon on haettu data palvelimelta
 end note
