@@ -3,8 +3,6 @@ note left of selain
 osoitteessa /notes:
 käyttäjä kirjottaa muistiinpanon
 formin kenttään ja painaa talleta
-fullstack-exampleapp
-.herokuapp.com/notes
 end note
 selain->palvelin: POST fullstack-exampleapp.herokuapp.com/new_note
 note left of palvelin
