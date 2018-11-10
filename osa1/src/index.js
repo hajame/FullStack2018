@@ -8,20 +8,13 @@ const Otsikko = () => {
     )
 }
 
-const Sisalto = () => {
-    const osa1 = 'Reactin perusteet'
-    const tehtavia1 = 10
-    const osa2 = 'Tiedonvälitys propseilla'
-    const tehtavia2 = 7
-    const osa3 = 'Komponenttien tila'
-    const tehtavia3 = 14
-    const summa = tehtavia1 + tehtavia2 + tehtavia3
+const Sisalto = (props) => {
+
     return (
         <div>
-            <p>{osa1} {tehtavia1}</p>
-            <p>{osa2} {tehtavia2}</p>
-            <p>{osa3} {tehtavia3}</p>
-            <Yhteensa summa={summa} />
+            <p>{props.osa1} {props.tehtavia1}</p>
+            <p>{props.osa2} {props.tehtavia2}</p>
+            <p>{props.osa3} {props.tehtavia3}</p>
         </div>
     )
 }
@@ -37,12 +30,20 @@ const Yhteensa = (props) => {
 
 const App = () => {
 
-
+    const osa1 = 'Reactin perusteet'
+    const tehtavia1 = 10
+    const osa2 = 'Tiedonvälitys propseilla'
+    const tehtavia2 = 7
+    const osa3 = 'Komponenttien tila'
+    const tehtavia3 = 14
+    const summa = tehtavia1 + tehtavia2 + tehtavia3
 
     return (
         <div>
             <Otsikko />
-            <Sisalto />
+            <Sisalto osa1={osa1} osa2={osa2} osa3={osa3} 
+                tehtavia1={tehtavia1} tehtavia2={tehtavia2} tehtavia3={tehtavia3}  />
+            <Yhteensa summa={summa} />
         </div>
     )
 }
