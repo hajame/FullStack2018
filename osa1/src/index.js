@@ -28,9 +28,11 @@ const Osa = (props) => {
 }
 
 const Yhteensa = (props) => {
+    const osat = props.osat
+    const summa = osat[0].tehtavia + osat[1].tehtavia + osat[2].tehtavia
     return (
         <div>
-            <p>yhteensä {props.summa} tehtävää</p>
+            <p>yhteensä {summa} tehtävää</p>
         </div>
     )
 }
@@ -53,7 +55,6 @@ const App = () => {
       tehtavia: 14
     }
     ]
-    const summa = osat[0].tehtavia + osat[1].tehtavia + osat[2].tehtavia
 
     return (
         <div>
@@ -61,7 +62,7 @@ const App = () => {
             <Sisalto osa1={osat[0].nimi} osa2={osat[1].nimi} osa3={osat[2].nimi} 
                 tehtavia1={osat[0].tehtavia} tehtavia2={osat[1].tehtavia} 
                 tehtavia3={osat[2].tehtavia}  />
-            <Yhteensa summa={summa} />
+            <Yhteensa osat={osat} />
         </div>
     )
 }
