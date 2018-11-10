@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const Otsikko = (props) => {
-    const nimi = props.nimi
+    const kurssinNimi = props.nimi
     return (
-        <h1>{nimi}</h1>
+        <h1>{kurssinNimi}</h1>
     )
 }
 
