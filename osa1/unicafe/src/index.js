@@ -24,11 +24,11 @@ class App extends React.Component {
         let statistics;
         if (this.state.aanestetty) {
             statistics = <Statistics ka={this.state.hyva - this.state.huono /
-                    (this.state.hyva + this.state.huono + this.state.neutraali)}
+                (this.state.hyva + this.state.huono + this.state.neutraali)}
                 posProsentti={this.state.hyva /
                     (this.state.hyva + this.state.huono + this.state.neutraali)} />
         } else {
-            statistics = <div><p>ei yhtään palautetta annettu</p></div>
+            statistics = <tbody><tr><td>ei yhtään palautetta annettu</td></tr></tbody>
         }
         return (
             <div>
@@ -48,34 +48,37 @@ class App extends React.Component {
                     />
                 </div>
                 <h1>statistiikka</h1>
-                <div>
-                    <Display label="hyvä" counter={this.state.hyva} />
-                    <Display label="neutraali" counter={this.state.neutraali} />
-                    <Display label="huono" counter={this.state.huono} />
-                    {console.log("aaa " + this.state.hyva)}
-                    {console.log("bbb " + this.state.huono)}
-                    {console.log("ccc " + this.state.neutraali)}
-                    {console.log("ddd " + this.state.aanestetty)}
+                <table>
+                    <tbody>
+                        <Display label="hyvä" counter={this.state.hyva} />
+                        <Display label="neutraali" counter={this.state.neutraali} />
+                        <Display label="huono" counter={this.state.huono} />
+                    </tbody>
+                    {console.log("hyvä " + this.state.hyva)}
+                    {console.log("neutr " + this.state.huono)}
+                    {console.log("huono " + this.state.neutraali)}
+                    {console.log("äänest " + this.state.aanestetty)}
                     {statistics}
-                </div>
+
+                </table>
             </div>
         )
     }
 }
 
-const Display = ({ label, counter }) => <div>{label} {counter}</div>
+const Display = ({ label, counter }) => <tr><td>{label}</td><td>{counter}</td></tr>
 const Button = ({ handleClick, text }) => (
     <button onClick={handleClick}>
         {text}
     </button>
 )
 const Statistics = ({ ka, posProsentti }) => (
-    <div>
-        <Statistic label={"keskiarvo " + ka.toFixed(1)} />
-        <Statistic label={"positiivisia " + (posProsentti * 100).toFixed(1) + " %"} />
-    </div>
+    <tbody>
+        <Statistic label={<td>keskiarvo</td>} value={<td>{ka.toFixed(1)}</td>} />
+<Statistic label={<td>positiivisia</td>} value={<td>{(posProsentti * 100).toFixed(1) + " %"}</td>} />
+    </tbody>
 )
-const Statistic = ({ label }) => <div>{label}</div>
+const Statistic = ({ label, value }) => <tr>{label} {value}</tr>
 
 ReactDOM.render(
     <App />,
