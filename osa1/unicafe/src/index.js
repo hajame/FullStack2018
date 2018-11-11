@@ -11,8 +11,6 @@ class App extends React.Component {
         }
     }
 
-
-
     asetaArvoon = (palaute, arvo) => {
         return () => {
             if (palaute === 1) this.setState({ hyva: arvo })
@@ -20,6 +18,7 @@ class App extends React.Component {
             else this.setState({ huono: arvo })
         }
     }
+
     render() {
         return (
             <div>
@@ -43,6 +42,10 @@ class App extends React.Component {
                 <Display label="hyvä" counter={this.state.hyva} />
                 <Display label="neutraali" counter={this.state.neutraali} /> 
                 <Display label="huono" counter={this.state.huono} />
+                <Statistics ka={this.state.hyva - this.state.huono / 
+                        (this.state.hyva+this.state.huono+this.state.neutraali)} 
+                    pospros={this.state.hyva / 
+                        (this.state.hyva+this.state.huono+this.state.neutraali)} />
                 </div>
             </div>
         )
@@ -55,6 +58,13 @@ const Button = ({ handleClick, text }) => (
         {text}
     </button>
 )
+const Statistics = ({ka, pospros}) => (
+    <div>
+        <Statistic label={"keskiarvo " + ka}  />
+        <Statistic label={"positiivisia " + pospros * 100 + " %"}  />
+    </div>
+)
+const Statistic = ({ label }) => <div>{label}</div>
 
 ReactDOM.render(
     <App />,
