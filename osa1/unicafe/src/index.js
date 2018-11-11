@@ -24,7 +24,7 @@ class App extends React.Component {
         let statistics;
         if (this.state.aanestetty) {
             statistics = <Statistics ka={this.state.hyva - this.state.huono /
-                (this.state.hyva + this.state.huono + this.state.neutraali)}
+                    (this.state.hyva + this.state.huono + this.state.neutraali)}
                 posProsentti={this.state.hyva /
                     (this.state.hyva + this.state.huono + this.state.neutraali)} />
         } else {
