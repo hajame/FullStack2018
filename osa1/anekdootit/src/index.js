@@ -6,7 +6,7 @@ class App extends React.Component {
         super(props)
         this.state = {
             selected: 0,
-            pisteet: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+            pisteet: [0, 0, 0, 0, 0, 0]
         }
     }
 
@@ -17,16 +17,20 @@ class App extends React.Component {
     }
     vote = (number) => {
         return () => {
-            const kopio = { ...this.state.pisteet }
+            const kopio = [ ...this.state.pisteet ]
             kopio[number] += 1   // kasvatetaan olion kentän 2 arvoa yhdellä
             this.setState({
-                pisteet:  kopio
+                pisteet: kopio
             })
-            console.log("voted for "+number)
+            console.log("voted for " + number)
         }
     }
 
+
+
+
     render() {
+        const topAnec = this.state.pisteet.indexOf(Math.max(...this.state.pisteet))
         return (
             <div>
                 {this.props.anecdotes[this.state.selected]}
@@ -38,6 +42,11 @@ class App extends React.Component {
                 <br />
                 <button onClick={this.klik}>get inspired</button>
                 <button onClick={this.vote(this.state.selected)}>vote</button>
+                <h2>anecdote with most votes:</h2>
+                {this.props.anecdotes[topAnec]}
+                <p>
+                    has {this.state.pisteet[topAnec]} votes
+                </p>
             </div>
         )
     }
