@@ -7,19 +7,29 @@ class App extends React.Component {
         this.state = {
             hyva: 0,
             neutraali: 0,
-            huono: 0
+            huono: 0,
+            aanestetty: false
         }
     }
 
     asetaArvoon = (palaute, arvo) => {
         return () => {
-            if (palaute === 1) this.setState({ hyva: arvo })
-            else if (palaute === 0) this.setState({ neutraali: arvo })
-            else this.setState({ huono: arvo })
+            if (palaute === 1) this.setState({ hyva: arvo, aanestetty: true })
+            else if (palaute === 0) this.setState({ neutraali: arvo, aanestetty: true })
+            else this.setState({ huono: arvo, aanestetty: true })
         }
     }
 
     render() {
+        let statistics;
+        if (this.state.aanestetty) {
+            statistics = <Statistics ka={this.state.hyva - this.state.huono /
+                (this.state.hyva + this.state.huono + this.state.neutraali)}
+                posProsentti={this.state.hyva /
+                    (this.state.hyva + this.state.huono + this.state.neutraali)} />
+        } else {
+            statistics = <div><p>ei yhtään palautetta annettu</p></div>
+        }
         return (
             <div>
                 <h1>anna palautetta</h1>
@@ -39,13 +49,14 @@ class App extends React.Component {
                 </div>
                 <h1>statistiikka</h1>
                 <div>
-                <Display label="hyvä" counter={this.state.hyva} />
-                <Display label="neutraali" counter={this.state.neutraali} /> 
-                <Display label="huono" counter={this.state.huono} />
-                <Statistics ka={this.state.hyva - this.state.huono / 
-                        (this.state.hyva+this.state.huono+this.state.neutraali)} 
-                    pospros={this.state.hyva / 
-                        (this.state.hyva+this.state.huono+this.state.neutraali)} />
+                    <Display label="hyvä" counter={this.state.hyva} />
+                    <Display label="neutraali" counter={this.state.neutraali} />
+                    <Display label="huono" counter={this.state.huono} />
+                    {console.log("aaa " + this.state.hyva)}
+                    {console.log("bbb " + this.state.huono)}
+                    {console.log("ccc " + this.state.neutraali)}
+                    {console.log("ddd " + this.state.aanestetty)}
+                    {statistics}
                 </div>
             </div>
         )
@@ -58,10 +69,10 @@ const Button = ({ handleClick, text }) => (
         {text}
     </button>
 )
-const Statistics = ({ka, pospros}) => (
+const Statistics = ({ ka, posProsentti }) => (
     <div>
-        <Statistic label={"keskiarvo " + ka}  />
-        <Statistic label={"positiivisia " + pospros * 100 + " %"}  />
+        <Statistic label={"keskiarvo " + ka.toFixed(1)} />
+        <Statistic label={"positiivisia " + (posProsentti * 100).toFixed(1) + " %"} />
     </div>
 )
 const Statistic = ({ label }) => <div>{label}</div>
