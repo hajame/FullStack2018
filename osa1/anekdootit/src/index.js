@@ -26,27 +26,19 @@ class App extends React.Component {
         }
     }
 
-
-
-
     render() {
         const topAnec = this.state.pisteet.indexOf(Math.max(...this.state.pisteet))
         return (
             <div>
                 {this.props.anecdotes[this.state.selected]}
                 {console.log("current " + this.state.selected)}
-                <p>
-                    has {this.state.pisteet[this.state.selected]} votes
-                </p>
-                <br />
+                <p>has {this.state.pisteet[this.state.selected]} votes</p>
                 <br />
                 <button onClick={this.klik}>get inspired</button>
                 <button onClick={this.vote(this.state.selected)}>vote</button>
                 <h2>anecdote with most votes:</h2>
                 {this.props.anecdotes[topAnec]}
-                <p>
-                    has {this.state.pisteet[topAnec]} votes
-                </p>
+                <p>has {this.state.pisteet[topAnec]} votes</p>
             </div>
         )
     }
