@@ -17,7 +17,7 @@ const Otsikko = (props) => {
     console.log('Nimi', props.nimi);
     const kurssinNimi = props.nimi
     return (
-        <h1>{kurssinNimi}</h1>
+        <h2>{kurssinNimi}</h2>
     )
 }
 
@@ -86,6 +86,7 @@ const App = () => {
     ]
     return (
         <div>
+            <h1>Opetusohjelma</h1>
             {kurssit.map(kurssi => (
                 <div key={kurssi.id}><Kurssi kurssi={kurssi} /></div>
             ))}
