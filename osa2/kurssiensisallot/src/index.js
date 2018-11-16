@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const Kurssi = (props) => {
+    console.log('Kurssi:', props.kurssi)
     const kurssi = props.kurssi
     return (
         <div>
@@ -13,6 +14,7 @@ const Kurssi = (props) => {
 }
 
 const Otsikko = (props) => {
+    console.log('Nimi', props.nimi);
     const kurssinNimi = props.nimi
     return (
         <h1>{kurssinNimi}</h1>
@@ -66,7 +68,6 @@ const App = () => {
 
     return (
         <div>
-            {console.log('Kurssi:', kurssi)}
             <Kurssi kurssi={kurssi} />
         </div>
     )
