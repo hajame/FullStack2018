@@ -1,4 +1,6 @@
 import React from 'react';
+import Person from './components/Person';
+import Adder from './components/Adder';
 
 class App extends React.Component {
     constructor(props) {
@@ -22,26 +24,8 @@ class App extends React.Component {
 
     addPerson = (event) => {
         event.preventDefault()
-        console.log('nappia painettu')
-        console.log(event.target)
-        const similar = this.state.persons.filter(p =>
-            p.name === this.state.newName)
-        if (similar.length > 0) {
-            console.log('ei lisätty', this.state.newName)
-            alert('On jo luettelossa')
-            return
-        }
-        const newPerson = {
-            name: this.state.newName,
-            number: this.state.newNumber
-        }
-        const persons = this.state.persons.concat(newPerson)
-        this.setState({
-            persons,
-            newName: '',
-            newNumber: ''
-        })
-        console.log('lisättiin', newPerson)
+        console.log('nappia painettu', event.target)
+        this.setState(Adder(this.state))
     }
 
     handleNameChange = (event) => this.setState({ newName: event.target.value })
@@ -49,38 +33,28 @@ class App extends React.Component {
     handleFilterChange = (event) => {
         const filter = event.target.value
         this.setState({ filter })
-        if (this.state.persons.every(p => p.name.includes(filter))) {
-            this.setState({ filtered: this.state.persons })
-            return
-        }
         const filtered = this.state.persons.filter(pers => (
-            pers.name.includes(filter)
-        ))
-        this.setState({filtered})
+            pers.name.toLowerCase().includes(filter.toLowerCase()))
+        )
+        this.setState({ filtered })
     }
 
     render() {
         return (
             <div>
                 <h1>Puhelinluettelo</h1>
-                <div>rajaa näytettäviä <input
-                            value={this.state.filter}
-                            onChange={this.handleFilterChange}
-                        />
+                <div>rajaa näytettäviä <input value={this.state.filter}
+                    onChange={this.handleFilterChange} />
                 </div>
                 <h3>Lisää uusi</h3>
                 <form onSubmit={this.addPerson}>
                     <div>
-                        nimi: <input
-                            value={this.state.newName}
-                            onChange={this.handleNameChange}
-                        />
+                        nimi: <input value={this.state.newName}
+                            onChange={this.handleNameChange} />
                     </div>
                     <div>
-                        numero: <input
-                            value={this.state.newNumber}
-                            onChange={this.handleNumberChange}
-                        />
+                        numero: <input value={this.state.newNumber}
+                            onChange={this.handleNumberChange} />
                     </div>
                     <div>
                         <button type="submit">lisää</button>
@@ -90,10 +64,7 @@ class App extends React.Component {
                 <table>
                     <tbody>
                         {this.state.filtered.map((
-                            person => <tr key={person.name}>
-                                <td>{person.name}</td>
-                                <td>{person.number}</td>
-                            </tr>)
+                            person => <Person person={person} />)
                         )}
                     </tbody>
                 </table>
