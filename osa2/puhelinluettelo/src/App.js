@@ -5,13 +5,18 @@ class App extends React.Component {
         super(props)
         this.state = {
             persons: [
-                {
-                    name: 'Arto Hellas',
-                    number: '000 123 123'
-                },
+                { name: 'Arto Hellas', number: '000 123 123' },
+                { name: 'Larto Hellas', number: '123 123' },
+                { name: 'Pirkko Pallas', number: '123 123' }
+            ],
+            filtered: [
+                { name: 'Arto Hellas', number: '000 123 123' },
+                { name: 'Larto Hellas', number: '123 123' },
+                { name: 'Pirkko Pallas', number: '123 123' }
             ],
             newName: '',
-            newNumber: ''
+            newNumber: '',
+            filter: ''
         }
     }
 
@@ -41,11 +46,29 @@ class App extends React.Component {
 
     handleNameChange = (event) => this.setState({ newName: event.target.value })
     handleNumberChange = (event) => this.setState({ newNumber: event.target.value })
+    handleFilterChange = (event) => {
+        const filter = event.target.value
+        this.setState({ filter })
+        if (this.state.persons.every(p => p.name.includes(filter))) {
+            this.setState({ filtered: this.state.persons })
+            return
+        }
+        const filtered = this.state.persons.filter(pers => (
+            pers.name.includes(filter)
+        ))
+        this.setState({filtered})
+    }
 
     render() {
         return (
             <div>
-                <h2>Puhelinluettelo</h2>
+                <h1>Puhelinluettelo</h1>
+                <div>rajaa näytettäviä <input
+                            value={this.state.filter}
+                            onChange={this.handleFilterChange}
+                        />
+                </div>
+                <h3>Lisää uusi</h3>
                 <form onSubmit={this.addPerson}>
                     <div>
                         nimi: <input
@@ -66,7 +89,7 @@ class App extends React.Component {
                 <h2>Numerot</h2>
                 <table>
                     <tbody>
-                        {this.state.persons.map((
+                        {this.state.filtered.map((
                             person => <tr key={person.name}>
                                 <td>{person.name}</td>
                                 <td>{person.number}</td>
