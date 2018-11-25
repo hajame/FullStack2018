@@ -22,16 +22,42 @@ class App extends React.Component {
             .get('http://localhost:3001/persons')
             .then(response => {
                 console.log('promise fulfilled')
-                this.setState({ persons: response.data, 
-                    filtered: response.data })
+                this.setState({
+                    persons: response.data,
+                    filtered: response.data
+                })
             })
-        
+
     }
 
     addPerson = (event) => {
         event.preventDefault()
         console.log('nappia painettu', event.target)
-        this.setState(Adder(this.state))
+        const similar = this.state.persons.filter(p =>
+            p.name === this.state.newName)
+        if (similar.length > 0) {
+            console.log('ei lisätty', this.state.newName)
+            alert('On jo luettelossa')
+            return
+        }
+        const newPerson = {
+            name: this.state.newName,
+            number: this.state.newNumber
+        }
+        const newState = { ...this.state, newName: '', newNumber: '' }
+        axios
+            .post('http://localhost:3001/persons', newPerson)
+            .then(response => {
+                newState.persons = this.state.persons.concat(response.data)
+                newState.filtered = this.state.persons.filter(pers => (
+                    pers.name.toLowerCase()
+                        .includes(this.state.filter.toLowerCase())
+                    )
+                )
+                this.setState(newState)
+            })
+        console.log('lisättiin', newPerson)
+        console.log('uusi state', this.state)
     }
 
     handleNameChange = (event) => this.setState({ newName: event.target.value })
