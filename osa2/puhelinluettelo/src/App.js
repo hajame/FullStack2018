@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Person from './components/Person';
 import Adder from './components/Adder';
 
@@ -6,20 +7,25 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            persons: [
-                { name: 'Arto Hellas', number: '000 123 123' },
-                { name: 'Larto Hellas', number: '123 123' },
-                { name: 'Pirkko Pallas', number: '123 123' }
-            ],
-            filtered: [
-                { name: 'Arto Hellas', number: '000 123 123' },
-                { name: 'Larto Hellas', number: '123 123' },
-                { name: 'Pirkko Pallas', number: '123 123' }
-            ],
+            persons: [],
+            filtered: [],
             newName: '',
             newNumber: '',
             filter: ''
         }
+        console.log('constructor')
+    }
+
+    componentDidMount() {
+        console.log('did mount')
+        axios
+            .get('http://localhost:3001/persons')
+            .then(response => {
+                console.log('promise fulfilled')
+                this.setState({ persons: response.data, 
+                    filtered: response.data })
+            })
+        
     }
 
     addPerson = (event) => {
@@ -40,6 +46,7 @@ class App extends React.Component {
     }
 
     render() {
+        console.log('render')
         return (
             <div>
                 <h1>Puhelinluettelo</h1>
@@ -64,7 +71,7 @@ class App extends React.Component {
                 <table>
                     <tbody>
                         {this.state.filtered.map((
-                            person => <Person person={person} />)
+                            person => <Person key={person.id} person={person} />)
                         )}
                     </tbody>
                 </table>

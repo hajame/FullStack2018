@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Adder = ( state ) => {
     const similar = state.persons.filter(p =>
         p.name === state.newName)
