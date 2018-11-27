@@ -8,7 +8,6 @@ class App extends React.Component {
         super(props)
         this.state = {
             persons: [],
-            filtered: [],
             newName: '',
             newNumber: '',
             filter: ''
@@ -49,11 +48,6 @@ class App extends React.Component {
             .post('http://localhost:3001/persons', newPerson)
             .then(response => {
                 newState.persons = this.state.persons.concat(response.data)
-                newState.filtered = this.state.persons.filter(pers => (
-                    pers.name.toLowerCase()
-                        .includes(this.state.filter.toLowerCase())
-                    )
-                )
                 this.setState(newState)
             })
         console.log('lisättiin', newPerson)
@@ -96,9 +90,11 @@ class App extends React.Component {
                 <h2>Numerot</h2>
                 <table>
                     <tbody>
-                        {this.state.filtered.map((
-                            person => <Person key={person.id} person={person} />)
-                        )}
+                        {this.state.persons.filter(pers => (
+                                pers.name.toLowerCase().includes(this.state.filter.toLowerCase())
+                            )
+                        ).map(person => <Person key={person.id} person={person} />)}
+                        {/* todo eristä filtteröinti */}
                     </tbody>
                 </table>
             </div>
