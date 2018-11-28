@@ -3,6 +3,7 @@ import axios from 'axios';
 import Person from './components/Person';
 import Adder from './components/Adder';
 import personService from "./services/persons";
+import Notification from "./components/Notification";
 
 class App extends React.Component {
     constructor(props) {
@@ -11,7 +12,8 @@ class App extends React.Component {
             persons: [],
             newName: '',
             newNumber: '',
-            filter: ''
+            filter: '',
+            notification: null
         }
         console.log('constructor')
     }
@@ -25,6 +27,12 @@ class App extends React.Component {
             })
     }
 
+    setNotificationTimeout() {
+        setTimeout(() => {
+                    this.setState({notification: null})
+                }, 5000)
+    }
+
     removePerson = (id, e) => {
         e.preventDefault()
         const person = this.state.persons.find(p => p.id === id)
@@ -32,12 +40,14 @@ class App extends React.Component {
             personService
                 .remove(id)
                 .then(this.setState({
+                    notification: `poistettiin henkilö ${person.name}`,
                     persons: this.state.persons.filter(p => p.id !== id)
                 }))
                 .catch(error => {
                     alert(`henkilö '${person.name}' on jo valitettavasti poistettu palvelimelta`)
                     this.setState({ persons: this.state.persons.filter(p => p.id !== id) })
                 })
+            this.setNotificationTimeout()
         }
     }
 
@@ -48,8 +58,8 @@ class App extends React.Component {
             p.name === this.state.newName)
         if (similar !== undefined) {
             console.log('on jo', similar)
-            if (window.confirm(`${similar.name} on jo luettelossa, 
-                korvataanko vanha numero uudella?`)) {
+            if (window.confirm(
+                `${similar.name} on jo luettelossa, korvataanko vanha numero uudella?`)) {
                 similar.number = this.state.newNumber
                 let newPersons = this.state.persons.filter(p => p.id !== similar.id)
                 newPersons = newPersons.concat(similar)
@@ -58,9 +68,11 @@ class App extends React.Component {
                     .then(response => {
                         this.setState({
                             ...this.state,
+                            notification: `korvattiin henkilön ${similar.name} numero`,
                             persons: newPersons,
                             newName: '', newNumber: ''
-                        })  
+                        })
+                        this.setNotificationTimeout()  
                     })
             }
             return
@@ -74,9 +86,11 @@ class App extends React.Component {
             .then(response => {
                 this.setState({
                     ...this.state,
+                    notification: `lisättiin ${newPerson.name}`,
                     persons: this.state.persons.concat(response.data),
                     newName: '', newNumber: ''
                 })
+                this.setNotificationTimeout()
             })
         console.log('lisättiin', newPerson)
         console.log('uusi state', this.state)
@@ -91,6 +105,7 @@ class App extends React.Component {
         return (
             <div>
                 <h1>Puhelinluettelo</h1>
+                <Notification message={this.state.notification} />
                 <div>rajaa näytettäviä <input value={this.state.filter}
                     onChange={this.handleFilterChange} />
                 </div>
@@ -114,7 +129,7 @@ class App extends React.Component {
                         {this.state.persons.filter(pers => (
                             pers.name.toLowerCase().includes(this.state.filter.toLowerCase())
                         )).map(person =>
-                            <tr key={person.id}>
+                            <tr className='person' key={person.id}>
                                 <td>{person.name}</td>
                                 <td>{person.number}</td>
                                 <td>
