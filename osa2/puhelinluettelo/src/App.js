@@ -44,11 +44,25 @@ class App extends React.Component {
     addPerson = (event) => {
         event.preventDefault()
         console.log('nappia painettu', event.target)
-        const similar = this.state.persons.filter(p =>
+        let similar = this.state.persons.find(p =>
             p.name === this.state.newName)
-        if (similar.length > 0) {
-            console.log('ei lisätty', this.state.newName)
-            alert('On jo luettelossa')
+        if (similar !== undefined) {
+            console.log('on jo', similar)
+            if (window.confirm(`${similar.name} on jo luettelossa, 
+                korvataanko vanha numero uudella?`)) {
+                similar.number = this.state.newNumber
+                let newPersons = this.state.persons.filter(p => p.id !== similar.id)
+                newPersons = newPersons.concat(similar)
+                personService
+                    .update(similar.id, similar)
+                    .then(response => {
+                        this.setState({
+                            ...this.state,
+                            persons: newPersons,
+                            newName: '', newNumber: ''
+                        })  
+                    })
+            }
             return
         }
         const newPerson = {
