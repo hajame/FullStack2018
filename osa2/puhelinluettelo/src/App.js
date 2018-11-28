@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Person from './components/Person';
 import Adder from './components/Adder';
+import personService from "./services/persons";
 
 class App extends React.Component {
     constructor(props) {
@@ -16,17 +17,12 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        console.log('did mount')
-        axios
-            .get('http://localhost:3001/persons')
-            .then(response => {
+        personService
+            .getAll()
+            .then(persons => {
                 console.log('promise fulfilled')
-                this.setState({
-                    persons: response.data,
-                    filtered: response.data
-                })
+                this.setState({persons})
             })
-
     }
 
     addPerson = (event) => {
@@ -43,12 +39,13 @@ class App extends React.Component {
             name: this.state.newName,
             number: this.state.newNumber
         }
-        const newState = { ...this.state, newName: '', newNumber: '' }
-        axios
-            .post('http://localhost:3001/persons', newPerson)
+        personService
+            .create(newPerson)
             .then(response => {
-                newState.persons = this.state.persons.concat(response.data)
-                this.setState(newState)
+                this.setState({
+                    ...this.state,
+                    persons: this.state.persons.concat(response.data),
+                    newName: '', newNumber: ''})
             })
         console.log('lisättiin', newPerson)
         console.log('uusi state', this.state)
@@ -56,14 +53,7 @@ class App extends React.Component {
 
     handleNameChange = (event) => this.setState({ newName: event.target.value })
     handleNumberChange = (event) => this.setState({ newNumber: event.target.value })
-    handleFilterChange = (event) => {
-        const filter = event.target.value
-        this.setState({ filter })
-        const filtered = this.state.persons.filter(pers => (
-            pers.name.toLowerCase().includes(filter.toLowerCase()))
-        )
-        this.setState({ filtered })
-    }
+    handleFilterChange = (event) => this.setState({ filter: event.target.value })
 
     render() {
         console.log('render')
@@ -91,9 +81,8 @@ class App extends React.Component {
                 <table>
                     <tbody>
                         {this.state.persons.filter(pers => (
-                                pers.name.toLowerCase().includes(this.state.filter.toLowerCase())
-                            )
-                        ).map(person => <Person key={person.id} person={person} />)}
+                            pers.name.toLowerCase().includes(this.state.filter.toLowerCase())
+                        )).map(person => <Person key={person.id} person={person} />)}
                         {/* todo eristä filtteröinti */}
                     </tbody>
                 </table>
