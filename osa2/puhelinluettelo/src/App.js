@@ -74,6 +74,10 @@ class App extends React.Component {
                         })
                         this.setNotificationTimeout()  
                     })
+                    .catch(error => {
+                        alert(`henkilö '${similar.name}' on jo valitettavasti poistettu palvelimelta`)
+                        this.setState({ persons: this.state.persons.filter(p => p.id !== similar.id) })
+                    })
             }
             return
         }
