@@ -1,7 +1,7 @@
 import React from 'react';
-import axios from 'axios';
-import Person from './components/Person';
-import Adder from './components/Adder';
+// import axios from 'axios';
+// import Person from './components/Person';
+// import Adder from './components/Adder';
 import personService from "./services/persons";
 import Notification from "./components/Notification";
 
