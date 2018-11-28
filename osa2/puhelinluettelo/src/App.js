@@ -21,8 +21,24 @@ class App extends React.Component {
             .getAll()
             .then(persons => {
                 console.log('promise fulfilled')
-                this.setState({persons})
+                this.setState({ persons })
             })
+    }
+
+    removePerson = (id, e) => {
+        e.preventDefault()
+        const person = this.state.persons.find(p => p.id === id)
+        if (window.confirm(`poistetaanko ${person.name} ?`)) {
+            personService
+                .remove(id)
+                .then(this.setState({
+                    persons: this.state.persons.filter(p => p.id !== id)
+                }))
+                .catch(error => {
+                    alert(`henkilö '${person.name}' on jo valitettavasti poistettu palvelimelta`)
+                    this.setState({ persons: this.state.persons.filter(p => p.id !== id) })
+                })
+        }
     }
 
     addPerson = (event) => {
@@ -45,7 +61,8 @@ class App extends React.Component {
                 this.setState({
                     ...this.state,
                     persons: this.state.persons.concat(response.data),
-                    newName: '', newNumber: ''})
+                    newName: '', newNumber: ''
+                })
             })
         console.log('lisättiin', newPerson)
         console.log('uusi state', this.state)
@@ -82,7 +99,15 @@ class App extends React.Component {
                     <tbody>
                         {this.state.persons.filter(pers => (
                             pers.name.toLowerCase().includes(this.state.filter.toLowerCase())
-                        )).map(person => <Person key={person.id} person={person} />)}
+                        )).map(person =>
+                            <tr key={person.id}>
+                                <td>{person.name}</td>
+                                <td>{person.number}</td>
+                                <td>
+                                    <button onClick={(e) => this.removePerson(person.id, e)}>poista</button>
+                                </td>
+                            </tr>
+                        )}
                         {/* todo eristä filtteröinti */}
                     </tbody>
                 </table>
