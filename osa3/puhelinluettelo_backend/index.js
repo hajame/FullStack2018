@@ -27,8 +27,11 @@ let persons = [
     }
 ]
 
-app.get('/api', (req, res) => {
-    res.send('<h1>Hello World!</h1>')
+app.get('/info', (req, res) => {
+    res.send(`
+    <p>puhelinluettelossa ${persons.length} henkilön tiedot</p>
+    <p>${new Date()}</p>
+    `)
 })
 
 app.get('/api/persons', (req, res) => {
