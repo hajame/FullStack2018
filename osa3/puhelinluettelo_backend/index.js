@@ -39,8 +39,19 @@ app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
 
+app.get('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const person = persons.find(pers => pers.id === id)
+    if (person) {
+        response.json(person)
+    } else {
+        response.status(404).send(`<h2>So, So Sorry...</h2>
+            <p>404: person with id ${id} not found</p>`).end()
+    }
+})
+
 // const generateId = () => {
-    //     const maxId = persons.length > 0 ? persons.map(p => p.id)
+//     const maxId = persons.length > 0 ? persons.map(p => p.id)
 //         .sort((a, b) => a - b).reverse()[0] : 1
 //     return maxId + 1
 // }
@@ -67,17 +78,6 @@ app.get('/api/persons', (req, res) => {
 
 //     response.status(204).end()
 // })
-
-// app.get('/api/persons/:id', (request, response) => {
-//     const id = Number(request.params.id)
-//     const note = persons.find(pers => pers.id === id)
-//     if (person) {
-//         response.json(person)
-//     } else {
-//         response.status(404).end()
-//     }
-// })
-
 
 const PORT = 3001
 app.listen(PORT, () => {
