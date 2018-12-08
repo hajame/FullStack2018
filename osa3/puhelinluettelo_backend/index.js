@@ -6,21 +6,20 @@ const app = express()
 app.use(bodyParser.json())
 
 morgan.token('type', function (req, res) {
-     return req.headers['content-type'] 
+    return req.headers['content-type']
 })
 
 app.use(morgan(function (tokens, req, res) {
     return [
-      tokens.method(req, res),
-      tokens.url(req, res),
-      tokens.status(req, res),
-      JSON.stringify(req.body), 
-      JSON.stringify(req.body).length, '-',
-      tokens['response-time'](req, res), 'ms', '-',
-      tokens['type'](req, res)
+        tokens.method(req, res),
+        tokens.url(req, res),
+        tokens.status(req, res),
+        JSON.stringify(req.body),
+        JSON.stringify(req.body).length, '-',
+        tokens['response-time'](req, res), 'ms', '-',
+        tokens['type'](req, res)
     ].join(' ')
-  })
-)
+}))
 
 let persons = [
     {
