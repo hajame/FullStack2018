@@ -3,6 +3,14 @@ const app = express()
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
+const logger = (request, response, next) => {
+    console.log('Method:', request.method)
+    console.log('Path:  ', request.path)
+    console.log('Body:  ', request.body)
+    console.log('---')
+    next()
+}
+app.use(logger)
 
 let notes = [
     {
@@ -73,6 +81,11 @@ app.get('/notes', (req, res) => {
     console.log('notes')
     res.json(notes)
 })
+
+const error = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+app.use(error)
 
 const PORT = 3001
 app.listen(PORT, () => {
