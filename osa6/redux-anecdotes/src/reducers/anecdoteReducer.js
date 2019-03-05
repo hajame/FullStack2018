@@ -32,6 +32,8 @@ const reducer = (state = initialState, action) => {
       }
       return state.map(anec => 
         anec.id !== id ? anec : changedAnec)
+    case 'NEW_ANECDOTE':
+      return state.concat(action.data)
     default:
       return state
   }
