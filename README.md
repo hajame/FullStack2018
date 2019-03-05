@@ -5,11 +5,11 @@ Repository for University of Helsinki's MOOC course
 
 ## Exercises
 
-- 2018 Open university
+- __2018 Open university__
   - [part 0](https://github.com/hajame/FullStack2018/tree/master/osa0)
   - [part 1](https://github.com/hajame/FullStack2018/tree/master/osa1)
   - [part 2](https://github.com/hajame/FullStack2018/tree/master/osa2)
   - [part 3: Phonebook backend](https://github.com/hajame/puhelinluettelo_backend)
-- 2019 Helsinki university
-  - [part 4: Blog databasep backend](https://github.com/hajame/bloglogger-backend)
+- __2019 Helsinki university__
+  - [part 4: Blog database backend](https://github.com/hajame/bloglogger-backend)
   - [part 5: Blog database frontend](https://github.com/hajame/bloglogger-frontend)
