@@ -6,12 +6,8 @@ export const setNotification = (content) => {
   }
 }
 
-
-const initialState = 'You are notified. Happy?'
-
-const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
+const reducer = (state = null, action) => {
+  console.log('notificationReducer: state, action', state, action)
   switch (action.type) {
     case 'SET_NOTIFICATION':
       state = action.data
