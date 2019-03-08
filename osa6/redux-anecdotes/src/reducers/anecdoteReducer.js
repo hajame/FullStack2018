@@ -1,11 +1,7 @@
-export const createAnecdote = (content) => {
+export const createAnecdote = (data) => {
   return {
     type: 'NEW_ANECDOTE',
-    data: {
-      content,
-      id: (100000 * Math.random()).toFixed(0),
-      votes: 0
-    }      
+    data   
   }
 }
 
