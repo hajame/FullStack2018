@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import { voteFor } from './../reducers/anecdoteReducer'
 import { setNotification } from './../reducers/notificationReducer'
 
-const AnecdoteList = ({ 
-  voteFor, 
+const AnecdoteList = ({
+  voteFor,
   setNotification,
   anecdotes
 }) => {
   const vote = (anecdote) => {
     console.log('vote', anecdote)
-    voteFor(anecdote.id)
+    voteFor(anecdote)
     setNotification(`you voted '${anecdote.content}'`)
     setTimeout(() => {
       setNotification(null)
