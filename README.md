@@ -15,3 +15,4 @@ Repository for University of Helsinki's MOOC course
 - __2019 Helsinki university__
   - [part 4: Blog database backend (sep)](https://github.com/hajame/bloglogger-backend)
   - [part 5: Blog database frontend (sep)](https://github.com/hajame/bloglogger-frontend)
+  - [part 6](https://github.com/hajame/FullStackMOOC/tree/master/osa6)
